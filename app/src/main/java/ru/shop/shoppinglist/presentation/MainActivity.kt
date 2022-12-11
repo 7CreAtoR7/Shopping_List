@@ -1,15 +1,12 @@
 package ru.shop.shoppinglist.presentation
 
-import android.content.ClipData.Item
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.shop.shoppinglist.R
-import ru.shop.shoppinglist.domain.ShopItem
 
 class MainActivity : AppCompatActivity() {
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.shop.shoppinglist.R
 import ru.shop.shoppinglist.domain.ShopItem
@@ -13,17 +14,19 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
 
     private var count = 0
 
+    var shopList = listOf<ShopItem>()
+        set(value) {
+            val callback = ShopListDiffCallback(shopList, value)
+            val diffResult = DiffUtil.calculateDiff(callback)
+            diffResult.dispatchUpdatesTo(this)
+            field = value
+        }
+
     var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
     var onShopItemClickListener: ((ShopItem) -> Unit)? = null
 
-    var shopList = listOf<ShopItem>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
-        Log.d("TestOnCreate", "onCreateViewHolder count: ${++count}, viewType = ${viewType}")
+        //Log.d("TestOnCreate", "onCreateViewHolder count: ${++count}")
         val layout = when (viewType) {
             VIEWTYPE_ENABLED -> R.layout.item_shop_enabled
             VIEWTYPE_DISABLED -> R.layout.item_shop_disabled
@@ -34,6 +37,7 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
     }
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
+        Log.d("onBindViewHolder", "onBindViewHolder count: ${++count}")
         val element = shopList[position]
         holder.tvName.text = element.name
         holder.tvCount.text = element.count.toString()
@@ -61,8 +65,8 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
     }
 
     class ShopItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvName = view.findViewById<TextView>(R.id.tv_name)
-        val tvCount = view.findViewById<TextView>(R.id.tv_count)
+        val tvName: TextView = view.findViewById(R.id.tv_name)
+        val tvCount: TextView = view.findViewById(R.id.tv_count)
     }
 
     companion object {

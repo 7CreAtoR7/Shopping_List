@@ -40,6 +40,14 @@ class MainActivity : AppCompatActivity() {
                 ShopListAdapter.VIEWTYPE_DISABLED,
                 ShopListAdapter.MAX_POOL_SIZE
             )
+
+        }
+        shopListAdapter.onShopItemLongClickListener = {
+            viewModel.changeEnableState(it)
+        }
+
+        shopListAdapter.onShopItemClickListener = {
+            Log.d("MainActivity", it.toString())
         }
     }
 }

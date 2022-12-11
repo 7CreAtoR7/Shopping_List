@@ -10,7 +10,12 @@ import ru.shop.shoppinglist.R
 import ru.shop.shoppinglist.domain.ShopItem
 
 class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
+
     private var count = 0
+
+    var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
+    var onShopItemClickListener: ((ShopItem) -> Unit)? = null
+
     var shopList = listOf<ShopItem>()
         set(value) {
             field = value
@@ -33,7 +38,12 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         holder.tvName.text = element.name
         holder.tvCount.text = element.count.toString()
         holder.itemView.setOnLongClickListener {
+            onShopItemLongClickListener?.invoke(element)
             true
+        }
+
+        holder.itemView.setOnClickListener {
+            onShopItemClickListener?.invoke(element)
         }
     }
 

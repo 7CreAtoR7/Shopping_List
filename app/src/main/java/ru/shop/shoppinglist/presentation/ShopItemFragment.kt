@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,6 @@ class ShopItemFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("myFragment", "onAttach")
         if (context is OnEditingFinishedListener) {
             onEditingFinishedListener = context
         } else { //
@@ -42,7 +40,6 @@ class ShopItemFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("myFragment", "onCreate")
         parseParams() // initialized screenMode and shopItemId
     }
 
@@ -51,13 +48,11 @@ class ShopItemFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("myFragment", "onCreateView")
         return inflater.inflate(R.layout.fragment_shop_item, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("myFragment", "onViewCreated")
         viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         initViews(view)
         addTextChangeListeners() // слушатель на любое изменение в edittext
